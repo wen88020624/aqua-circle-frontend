@@ -1,73 +1,93 @@
-# React + TypeScript + Vite
+# AquaCircle Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+AquaCircle 魚缸管理系統的前端 Web 應用程式。
 
-Currently, two official plugins are available:
+## 架構設計
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+本專案採用**分層架構**設計，將共用邏輯與平台特定代碼分離，以便未來擴展到 React Native。
 
-## React Compiler
+詳細架構說明請參考 [ARCHITECTURE.md](./ARCHITECTURE.md)。
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 功能
 
-## Expanding the ESLint configuration
+- ✅ 魚缸管理（使用真實 API）
+- ⚠️ 生物管理（Mock API）
+- ⚠️ 餵食記錄管理（Mock API）
+- ⚠️ 換水記錄管理（Mock API）
+- ⚠️ 下藥記錄管理（Mock API）
+- ⚠️ 水質檢測記錄管理（Mock API）
+- ⚠️ 耗材管理（Mock API）
+- ⚠️ 設備管理（Mock API）
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 開發
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 安裝依賴
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 設定環境變數
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+複製 `.env.example` 為 `.env`：
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+cp .env.example .env
 ```
+
+根據你的後端 API 位置調整 `VITE_API_BASE_URL`。
+
+### 啟動開發伺服器
+
+```bash
+npm run dev
+```
+
+應用程式將在 `http://localhost:5173` 啟動。
+
+### 建置
+
+```bash
+npm run build
+```
+
+### 預覽建置結果
+
+```bash
+npm run preview
+```
+
+## 專案結構
+
+```
+src/
+  shared/              # 共用層（未來可提取為獨立 package）
+    api/              # API 服務層
+    types/            # TypeScript 類型定義
+    utils/            # 工具函數和常數
+    mocks/            # Mock 資料
+  web/                # Web 平台特定代碼
+    components/       # Web UI 組件
+    pages/            # Web 頁面
+    router/           # React Router 設定
+  App.tsx             # Web App 入口
+  main.tsx            # 應用程式啟動點
+```
+
+## API 策略
+
+- **魚缸管理**：使用真實 API（`/aquariums`）
+- **其他功能**：使用 Mock API（在 `shared/api/` 中）
+
+當後端 API 準備好時，只需修改 `shared/api/` 中對應的檔案，將 Mock 實作替換為真實 API 調用即可。
+
+## 未來擴展到 React Native
+
+所有 `shared/` 目錄下的代碼都可以在 React Native 專案中重用：
+
+1. 複製 `shared/` 目錄到 React Native 專案
+2. 建立 `mobile/` 目錄存放 React Native 特定代碼
+3. 使用 React Navigation 替代 React Router
+4. 使用 React Native 組件替代 Web 組件
+
+詳細說明請參考 [ARCHITECTURE.md](./ARCHITECTURE.md)。
