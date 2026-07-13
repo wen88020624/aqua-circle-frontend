@@ -1,0 +1,42 @@
+---
+description: AquaCircle 前端核心契約（pnpm、Biome、Redux、三檔頁面）
+globs: web/**/*.{ts,tsx,js,jsx,css,scss},mobile/**/*.{ts,tsx},packages/shared/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Frontend Core
+
+## Stack（目標；新碼必遵）
+
+- **pnpm** workspaces：`web` / `mobile` / `packages/*`
+- **Biome**（非 ESLint/Prettier）
+- Web UI：**Joy UI** + **SCSS modules**；文案 **英文**
+- 狀態：**Redux + Saga**；HTTP：**axios**（經 shared `fetchApi`）
+- 現有單檔 page + local `fetch` = legacy，改動時收斂
+
+## 檔案放哪
+
+| 內容 | 位置 |
+|------|------|
+| API 常數、axios、saga、reducer、types | `packages/shared` |
+| Web 新頁 | `web/src/app/<path>/` 三檔：`page.tsx` + `content.tsx` + `page.module.scss` |
+| Mobile 畫面 | `screens/*Screen.tsx`（只 dispatch） |
+| 平台 UI | 各自 `components/`，不進 shared |
+
+## 資料流
+
+```
+dispatch → saga → fetchApi(axios) → reducer
+```
+
+- Page／Screen **禁止**直接 axios／`fetch`
+- Action：`UPPER_SNAKE_CASE`；查詢 `takeLatest`、寫入 `takeEvery`
+
+## 表單／樣式
+
+- react-hook-form + Joy `Controller`（Web）
+- 共用 SCSS 變數；Mobile 用 `StyleSheet`
+
+## 決策
+
+只採納 `docs/PRODUCT_DECISIONS.md` 的 `LOCKED`。詳見 skill `aqua-frontend-dev`。

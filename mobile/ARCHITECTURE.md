@@ -1,5 +1,7 @@
 # AquaCircle Mobile 架構設計
 
+> 資料流與工具鏈的**目標契約**以 `../.github/copilot-instructions.md` 為準（pnpm、Biome、Redux + Saga + axios、英文 UI）。本檔著重 Mobile 目錄與平台邊界；若與 copilot-instructions 衝突，以該文件為準。
+
 ## 專案結構
 
 ```
@@ -27,24 +29,23 @@ aqua-circle-mobile/
 
 ### 可共用內容
 
-1. **API 服務層** (`@aquacircle/shared/api`)
-   - 所有 API 調用邏輯
-   - HTTP 客戶端配置
-   - 錯誤處理
-   - ✅ **Web 和 Mobile 完全共用**
+1. **API + Redux 資料流**（`@aquacircle/shared`）
+   - axios 封裝、`API` 路徑常數、`fetchApi`
+   - saga／reducer／store 邏輯
+   - ✅ **Web 和 Mobile 完全共用**（UI 只 dispatch／select）
 
-2. **類型定義** (`@aquacircle/shared/types`)
+2. **類型定義**（`@aquacircle/shared/types`）
    - TypeScript interfaces/types
    - DTO 定義
    - ✅ **Web 和 Mobile 完全共用**
 
-3. **工具函數** (`@aquacircle/shared/utils`)
+3. **工具函數**（`@aquacircle/shared/utils`）
    - 資料驗證函數
    - 資料轉換函數
    - 常數定義
    - ✅ **Web 和 Mobile 完全共用**
 
-4. **Mock 資料** (`@aquacircle/shared/mocks`)
+4. **Mock 資料**（`@aquacircle/shared/mocks`）
    - 開發和測試用的假資料
    - ✅ **Web 和 Mobile 完全共用**
 
@@ -62,45 +63,33 @@ aqua-circle-mobile/
    - Stack Navigator, Tab Navigator 等
    - ❌ **Web 使用 React Router**
 
-3. **樣式** (`mobile/styles/`)
+3. **樣式** (`mobile/styles/` 或 Screen 內 StyleSheet)
    - StyleSheet API
-   - ❌ **Web 使用 CSS/Tailwind CSS**
+   - ❌ **Web 使用 Joy UI + SCSS modules**
 
 4. **畫面** (`mobile/screens/`)
-   - Mobile 特定的畫面設計
-   - 觸控優化
-   - ❌ **Web 使用 pages/**
+   - Mobile 特定的畫面設計；只 dispatch Redux，不直接 axios
+   - ❌ **Web 使用 `web/src/app/<path>/` 三檔契約**
 
 ## 使用共用代碼
 
-### 導入 API
-
-```typescript
-import { aquariumApi } from '@aquacircle/shared/api';
-
-// 使用 API
-const aquariums = await aquariumApi.findAll();
-```
-
-### 導入類型
+### 導入類型與工具
 
 ```typescript
 import type { Aquarium, Organism } from '@aquacircle/shared/types';
-
-const aquarium: Aquarium = {
-  id: 1,
-  name: '我的魚缸',
-  // ...
-};
+import { getTodayDate, AQUARIUM_STATUSES } from '@aquacircle/shared/utils';
 ```
 
-### 導入工具函數
+### 資料流（Redux）
 
 ```typescript
-import { getTodayDate, AQUARIUM_STATUSES } from '@aquacircle/shared/utils';
+import { useDispatch, useSelector } from 'react-redux';
 
-const today = getTodayDate();
-const statuses = AQUARIUM_STATUSES;
+const dispatch = useDispatch();
+const { list } = useSelector((state) => state.aquarium);
+
+dispatch({ type: 'FETCH_AQUARIUMS' });
+// ❌ 不要在 Screen 直接呼叫 axios 或 aquariumApi.findAll()
 ```
 
 ## 路徑別名配置
@@ -143,36 +132,37 @@ const statuses = AQUARIUM_STATUSES;
 
 1. 在 `src/mobile/screens/` 建立新的畫面組件
 2. 在 `src/mobile/navigation/AppNavigator.tsx` 註冊新路由
-3. 使用共用 API 和類型
+3. 使用 `useDispatch`／`useSelector` 與 shared saga（UI 文案英文）
 
 範例：
 
 ```typescript
 // src/mobile/screens/OrganismListScreen.tsx
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList } from 'react-native';
-import { organismApi } from '@aquacircle/shared/api';
-import type { Organism } from '@aquacircle/shared/types';
+import React, { useEffect } from 'react';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function OrganismListScreen() {
-  const [organisms, setOrganisms] = useState<Organism[]>([]);
-  
-  useEffect(() => {
-    loadOrganisms();
-  }, []);
+  const dispatch = useDispatch();
+  const organisms = useSelector((state: { organism: { list: { id: number; name: string }[] } }) => state.organism.list);
 
-  const loadOrganisms = async () => {
-    const data = await organismApi.findAll();
-    setOrganisms(data);
-  };
+  useEffect(() => {
+    dispatch({ type: 'FETCH_ORGANISMS' });
+  }, [dispatch]);
 
   return (
     <FlatList
       data={organisms}
+      keyExtractor={(item) => String(item.id)}
       renderItem={({ item }) => <Text>{item.name}</Text>}
+      ListHeaderComponent={<Text style={styles.title}>Organisms</Text>}
     />
   );
 }
+
+const styles = StyleSheet.create({
+  title: { fontSize: 18, fontWeight: 'bold' },
+});
 ```
 
 ### 建立新組件
@@ -193,7 +183,7 @@ export default function AquariumCard({ aquarium }: Props) {
   return (
     <View style={styles.card}>
       <Text style={styles.title}>{aquarium.name}</Text>
-      <Text>容量: {aquarium.capacity}L</Text>
+      <Text>Status: {aquarium.status}</Text>
     </View>
   );
 }
@@ -222,9 +212,9 @@ const styles = StyleSheet.create({
 
 | 功能 | Web | Mobile |
 |------|-----|--------|
-| UI 組件 | div, button, input | View, Text, TouchableOpacity |
-| 路由 | React Router | React Navigation |
-| 樣式 | CSS/Tailwind | StyleSheet API |
-| 表單 | HTML form | React Native 表單組件 |
-| 導航 | 側邊欄/頂部導航 | Tab Navigator/Drawer |
+| UI 元件 | Joy UI | View, Text, Pressable 等 |
+| 路由 | React Router + `src/app` 三檔 | React Navigation + screens |
+| 樣式 | SCSS modules | StyleSheet |
+| 資料流 | 共用 Redux + Saga + axios | 相同 |
+| 文案 | English | English |
 

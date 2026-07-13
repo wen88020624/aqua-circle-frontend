@@ -1,0 +1,14 @@
+---
+description: packages/shared 的 API／Redux／axios 慣例
+globs: packages/shared/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Shared Package
+
+- `api/`：路徑常數、`apiService`、axios instance／`fetchApi`
+- `redux/saga` + `redux/reducer`：domain 同名 camelCase；root 註冊
+- Action：`UPPER_SNAKE_CASE`；結果 action 常結尾 `_RESULT`
+- `types/`：Entity + Create／Update DTO；同步 barrel
+- 禁止：直接在 UI 套件呼叫；禁止 `react-dom`／`react-native`／DOM
+- Web／Mobile 共用同一 store 邏輯；平台只負責 Provider 掛載
