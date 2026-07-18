@@ -31,7 +31,6 @@
     "noImplicitThis": true,
     "alwaysStrict": true,
     "noImplicitReturns": true,
-    "noUnusedImports": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitOverride": true
   },

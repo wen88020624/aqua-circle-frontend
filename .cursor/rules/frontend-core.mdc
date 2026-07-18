@@ -9,7 +9,7 @@ alwaysApply: false
 ## Stack（目標；新碼必遵）
 
 - **pnpm** workspaces：`web` / `mobile` / `packages/*`
-- **Biome**（非 ESLint/Prettier）
+- **Biome**（非 ESLint/Prettier）；根目錄 `pnpm lint` / `pnpm lint:fix`
 - Web UI：**Joy UI** + **SCSS modules**；文案 **英文**
 - 狀態：**Redux + Saga**；HTTP：**axios**（經 shared `fetchApi`）
 - 現有單檔 page + local `fetch` = legacy，改動時收斂

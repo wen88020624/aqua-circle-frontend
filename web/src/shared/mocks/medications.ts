@@ -1,5 +1,5 @@
 // Mock 下藥記錄資料
-import type { MedicationRecord } from '../types';
+import type { MedicationRecord } from '../types'
 
 export const mockMedicationRecords: MedicationRecord[] = [
   {
@@ -11,5 +11,4 @@ export const mockMedicationRecords: MedicationRecord[] = [
     notes: '治療白點病',
     aquariumId: 1,
   },
-];
-
+]

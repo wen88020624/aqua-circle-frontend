@@ -1,5 +1,5 @@
 // Mock 水質檢測記錄資料
-import type { WaterQualityRecord } from '../types';
+import type { WaterQualityRecord } from '../types'
 
 export const mockWaterQualityRecords: WaterQualityRecord[] = [
   {
@@ -18,5 +18,4 @@ export const mockWaterQualityRecords: WaterQualityRecord[] = [
     notes: '略偏鹼性',
     aquariumId: 1,
   },
-];
-
+]

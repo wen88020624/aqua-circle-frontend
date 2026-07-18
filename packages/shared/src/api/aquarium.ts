@@ -1,11 +1,12 @@
 // 魚缸 API（真實 API）
-import { apiRequest } from './client';
-import type { Aquarium, CreateAquariumDto } from '../types';
+
+import type { Aquarium, CreateAquariumDto } from '../types'
+import { apiRequest } from './client'
 
 export const aquariumApi = {
   // 取得所有魚缸
   findAll: async (): Promise<Aquarium[]> => {
-    return apiRequest<Aquarium[]>('/aquariums');
+    return apiRequest<Aquarium[]>('/aquariums')
   },
 
   // 建立新魚缸
@@ -13,14 +14,13 @@ export const aquariumApi = {
     return apiRequest<Aquarium>('/aquariums', {
       method: 'POST',
       body: JSON.stringify(data),
-    });
+    })
   },
 
   // 刪除魚缸
   remove: async (id: number): Promise<void> => {
     await apiRequest<void>(`/aquariums/${id}`, {
       method: 'DELETE',
-    });
+    })
   },
-};
-
+}

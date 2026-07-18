@@ -1,30 +1,27 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import { useNavigation } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { RootStackParamList } from '../navigation/AppNavigator';
+import { useNavigation } from '@react-navigation/native'
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack'
+import { StatusBar } from 'expo-status-bar'
+import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import type { RootStackParamList } from '../navigation/AppNavigator'
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>
 
 export default function HomeScreen() {
-  const navigation = useNavigation<NavigationProp>();
+  const navigation = useNavigation<NavigationProp>()
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>AquaCircle</Text>
       <Text style={styles.subtitle}>歡迎使用 AquaCircle 行動應用</Text>
-      
-      <TouchableOpacity 
-        style={styles.button}
-        onPress={() => navigation.navigate('AquariumList')}
-      >
+
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('AquariumList')}>
         <Text style={styles.buttonText}>查看魚缸列表</Text>
       </TouchableOpacity>
-      
+
       <StatusBar style="auto" />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -59,5 +56,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
-});
-
+})

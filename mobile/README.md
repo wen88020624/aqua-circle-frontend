@@ -27,20 +27,21 @@ aqua-circle-mobile/
 
 ## 安裝依賴
 
-```bash
-npm install
-# 或使用 pnpm: pnpm install
-```
-
-**注意：** 本專案使用 npm 或 pnpm，請不要使用 yarn。
-
-## 啟動開發伺服器
+在 **monorepo 根目錄**（`aqua-circle-frontend/`）執行：
 
 ```bash
-npm start
+pnpm install
 ```
 
-這會啟動 Expo 開發伺服器，並顯示一個 QR code。
+啟動 Mobile：
+
+```bash
+pnpm mobile:start
+# 或
+pnpm --filter aqua-circle-mobile start
+```
+
+**注意：** 請使用 pnpm，不要使用 npm / yarn。
 
 ## 在手機上預覽
 
@@ -52,9 +53,9 @@ npm start
 
 2. 確保手機和電腦連接到同一個 Wi-Fi 網路
 
-3. 啟動開發伺服器：
+3. 啟動開發伺服器（在 monorepo 根目錄）：
    ```bash
-   npm start
+   pnpm mobile:start
    ```
 
 4. 使用 Expo Go 掃描終端機中顯示的 QR code
@@ -63,13 +64,13 @@ npm start
 
 ```bash
 # Android 模擬器
-npm run android
+pnpm mobile:android
 
 # iOS 模擬器 (需要 macOS)
-npm run ios
+pnpm mobile:ios
 
 # Web 瀏覽器
-npm run web
+pnpm mobile:web
 ```
 
 ## 環境變數

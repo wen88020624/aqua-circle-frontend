@@ -1,5 +1,5 @@
 // Mock 餵食記錄資料
-import type { FeedingRecord } from '../types';
+import type { FeedingRecord } from '../types'
 
 export const mockFeedingRecords: FeedingRecord[] = [
   {
@@ -18,5 +18,4 @@ export const mockFeedingRecords: FeedingRecord[] = [
     notes: '下午餵食',
     aquariumId: 1,
   },
-];
-
+]

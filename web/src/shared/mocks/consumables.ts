@@ -1,5 +1,5 @@
 // Mock 耗材資料
-import type { Consumable } from '../types';
+import type { Consumable } from '../types'
 
 export const mockConsumables: Consumable[] = [
   {
@@ -34,5 +34,4 @@ export const mockConsumables: Consumable[] = [
     purchaseDate: '2024-12-15',
     expiryDate: '2025-12-15',
   },
-];
-
+]

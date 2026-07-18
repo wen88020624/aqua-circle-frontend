@@ -3,25 +3,26 @@
   "version": "1.0.0",
   "private": true,
   "description": "AquaCircle - 前端應用程式（Web + Mobile）",
-  "workspaces": [
-    "packages/*",
-    "web",
-    "mobile"
-  ],
   "scripts": {
-    "web:dev": "cd web && npm run dev",
-    "web:build": "cd web && npm run build",
-    "web:preview": "cd web && npm run preview",
-    "web:lint": "cd web && npm run lint",
-    "mobile:start": "cd mobile && npm start",
-    "mobile:android": "cd mobile && npm run android",
-    "mobile:ios": "cd mobile && npm run ios",
-    "mobile:web": "cd mobile && npm run web"
+    "web:dev": "pnpm --filter aqua-circle-web dev",
+    "web:build": "pnpm --filter aqua-circle-web build",
+    "web:preview": "pnpm --filter aqua-circle-web preview",
+    "web:lint": "pnpm --filter aqua-circle-web lint",
+    "mobile:start": "pnpm --filter aqua-circle-mobile start",
+    "mobile:android": "pnpm --filter aqua-circle-mobile android",
+    "mobile:ios": "pnpm --filter aqua-circle-mobile ios",
+    "mobile:web": "pnpm --filter aqua-circle-mobile web",
+    "mobile:lint": "pnpm --filter aqua-circle-mobile lint",
+    "lint": "biome check web mobile packages",
+    "lint:fix": "biome check --write web mobile packages",
+    "format": "biome format --write web mobile packages"
   },
   "engines": {
     "node": ">=18.0.0",
-    "npm": ">=9.0.0"
+    "pnpm": ">=9.0.0"
   },
-  "packageManager": "npm@9.0.0"
+  "packageManager": "pnpm@11.14.0",
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.4"
+  }
 }
-

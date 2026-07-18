@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
-import { aquariumApi } from '@aquacircle/shared/api';
-import type { Aquarium } from '@aquacircle/shared/types';
+import { aquariumApi } from '@aquacircle/shared/api'
+import type { Aquarium } from '@aquacircle/shared/types'
+import React, { useEffect, useState } from 'react'
+import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native'
 
 export default function AquariumListScreen() {
-  const [aquariums, setAquariums] = useState<Aquarium[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [aquariums, setAquariums] = useState<Aquarium[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    loadAquariums();
-  }, []);
+    loadAquariums()
+  }, [])
 
   const loadAquariums = async () => {
     try {
-      setLoading(true);
-      setError(null);
-      const data = await aquariumApi.findAll();
-      setAquariums(data);
+      setLoading(true)
+      setError(null)
+      const data = await aquariumApi.findAll()
+      setAquariums(data)
     } catch (err) {
-      setError(err instanceof Error ? err.message : '載入失敗');
+      setError(err instanceof Error ? err.message : '載入失敗')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   if (loading) {
     return (
@@ -31,7 +31,7 @@ export default function AquariumListScreen() {
         <ActivityIndicator size="large" color="#2196F3" />
         <Text style={styles.loadingText}>載入中...</Text>
       </View>
-    );
+    )
   }
 
   if (error) {
@@ -39,7 +39,7 @@ export default function AquariumListScreen() {
       <View style={styles.centerContainer}>
         <Text style={styles.errorText}>錯誤: {error}</Text>
       </View>
-    );
+    )
   }
 
   return (
@@ -61,7 +61,7 @@ export default function AquariumListScreen() {
         }
       />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -110,5 +110,4 @@ const styles = StyleSheet.create({
     color: '#666',
     marginTop: 2,
   },
-});
-
+})

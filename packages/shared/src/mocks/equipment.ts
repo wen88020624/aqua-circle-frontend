@@ -1,5 +1,5 @@
 // Mock 設備資料
-import type { Equipment } from '../types';
+import type { Equipment } from '../types'
 
 export const mockEquipment: Equipment[] = [
   {
@@ -20,5 +20,4 @@ export const mockEquipment: Equipment[] = [
     purchaseDate: '2024-01-01',
     aquariumId: 1,
   },
-];
-
+]

@@ -1,5 +1,5 @@
 // Mock 生物資料
-import type { Organism } from '../types';
+import type { Organism } from '../types'
 
 export const mockOrganisms: Organism[] = [
   {
@@ -26,5 +26,4 @@ export const mockOrganisms: Organism[] = [
     notes: '喜歡躲藏',
     aquariumId: 1,
   },
-];
-
+]

@@ -1,8 +1,8 @@
-import { Link, useLocation } from 'react-router-dom';
-import './Navbar.css';
+import { Link, useLocation } from 'react-router-dom'
+import './Navbar.css'
 
 export function Navbar() {
-  const location = useLocation();
+  const location = useLocation()
 
   const navItems = [
     { path: '/aquariums', label: '魚缸管理' },
@@ -13,7 +13,7 @@ export function Navbar() {
     { path: '/water-quality', label: '水質檢測' },
     { path: '/consumables', label: '耗材管理' },
     { path: '/equipment', label: '設備管理' },
-  ];
+  ]
 
   return (
     <nav className="navbar">
@@ -22,12 +22,9 @@ export function Navbar() {
           AquaCircle
         </Link>
         <ul className="navbar-menu">
-          {navItems.map(item => (
+          {navItems.map((item) => (
             <li key={item.path}>
-              <Link
-                to={item.path}
-                className={location.pathname === item.path ? 'active' : ''}
-              >
+              <Link to={item.path} className={location.pathname === item.path ? 'active' : ''}>
                 {item.label}
               </Link>
             </li>
@@ -35,6 +32,5 @@ export function Navbar() {
         </ul>
       </div>
     </nav>
-  );
+  )
 }
-

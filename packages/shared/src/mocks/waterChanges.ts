@@ -1,5 +1,5 @@
 // Mock 換水記錄資料
-import type { WaterChangeRecord } from '../types';
+import type { WaterChangeRecord } from '../types'
 
 export const mockWaterChangeRecords: WaterChangeRecord[] = [
   {
@@ -16,5 +16,4 @@ export const mockWaterChangeRecords: WaterChangeRecord[] = [
     notes: '部分換水',
     aquariumId: 1,
   },
-];
-
+]

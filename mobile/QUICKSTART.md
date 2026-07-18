@@ -3,22 +3,22 @@
 ## 前置需求
 
 - Node.js (建議 v18 或以上)
-- npm 或 pnpm
+- pnpm (建議 v9+)
 - 手機上安裝 [Expo Go](https://expo.dev/client) 應用程式
 
 ## 安裝步驟
 
-1. **安裝依賴**
+1. **安裝依賴**（在 monorepo 根目錄）
 
 ```bash
-cd aqua-circle-mobile
-npm install
+cd aqua-circle-frontend
+pnpm install
 ```
 
 2. **啟動開發伺服器**
 
 ```bash
-npm start
+pnpm mobile:start
 ```
 
 這會啟動 Expo 開發伺服器，並在終端機顯示 QR code。
@@ -52,12 +52,12 @@ npm start
 
 ### 模組解析錯誤
 
-- 確保已安裝所有依賴：`npm install` 或 `pnpm install`
-- 清除快取並重新啟動：`expo start -c`
+- 確保已安裝所有依賴：在根目錄執行 `pnpm install`
+- 清除快取並重新啟動：`pnpm --filter aqua-circle-mobile start -- -c`
 - 刪除 `node_modules` 並重新安裝：
   ```bash
-  rm -rf node_modules
-  npm install  # 或 pnpm install
+  rm -rf node_modules web/node_modules mobile/node_modules
+  pnpm install
   ```
 
 ## 開發提示

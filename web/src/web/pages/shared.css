@@ -160,3 +160,13 @@ table tr:hover {
   color: #555;
 }
 
+.row-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}

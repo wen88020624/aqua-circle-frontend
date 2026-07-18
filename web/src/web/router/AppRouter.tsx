@@ -1,13 +1,13 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { Layout } from '../components/layout/Layout';
-import { AquariumList } from '../pages/AquariumList';
-import { OrganismList } from '../pages/OrganismList';
-import { FeedingList } from '../pages/FeedingList';
-import { WaterChangeList } from '../pages/WaterChangeList';
-import { MedicationList } from '../pages/MedicationList';
-import { WaterQualityList } from '../pages/WaterQualityList';
-import { ConsumableList } from '../pages/ConsumableList';
-import { EquipmentList } from '../pages/EquipmentList';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { Layout } from '../components/layout/Layout'
+import { AquariumList } from '../pages/AquariumList'
+import { ConsumableList } from '../pages/ConsumableList'
+import { EquipmentList } from '../pages/EquipmentList'
+import { FeedingList } from '../pages/FeedingList'
+import { MedicationList } from '../pages/MedicationList'
+import { OrganismList } from '../pages/OrganismList'
+import { WaterChangeList } from '../pages/WaterChangeList'
+import { WaterQualityList } from '../pages/WaterQualityList'
 
 export function AppRouter() {
   return (
@@ -26,6 +26,5 @@ export function AppRouter() {
         </Routes>
       </Layout>
     </BrowserRouter>
-  );
+  )
 }
-
